@@ -8,4 +8,5 @@ import (
 
 func main() {
 	fmt.Println(gois.Whois("example.com"))
+	fmt.Println(gois.Whois("sunzhongwei.com"))
 }
