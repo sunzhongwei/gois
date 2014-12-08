@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
 	//"github.com/vially/gois"
@@ -8,6 +9,13 @@ import (
 )
 
 func main() {
-	fmt.Println(gois.Whois("example.com"))
-	fmt.Println(gois.Whois("sunzhongwei.com"))
+	domains := []string{
+		"example.com",
+		"sunzhongwei.com",
+	}
+	for _, domain := range domains {
+		whoisInfo, _ := gois.Whois(domain)
+		jsonWhoisInfo, _ := json.MarshalIndent(whoisInfo, "", "    ")
+		fmt.Println(string(jsonWhoisInfo))
+	}
 }

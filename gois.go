@@ -12,8 +12,14 @@ import (
 	"github.com/jinzhu/now"
 )
 
-var CREATED_ON_KEYWORDS = []string{"creation date", "changed", "domain create date"}
-var EXPIRED_ON_KEYWORDS = []string{"expiration date"}
+var CREATED_ON_KEYWORDS = []string{
+	"creation date",
+	"changed",
+	"domain create date",
+}
+var EXPIRED_ON_KEYWORDS = []string{
+	"expiration date", // .com
+}
 
 // Record holds the information returned by the whois server
 type Record struct {
@@ -86,7 +92,6 @@ func QueryWhoisServer(domain, server string) (response string, err error) {
 
 // parse whois record
 // e.g. created on, expired on
-// TODO: expired on
 func parse(response string) (record *Record, err error) {
 	for _, line := range strings.Split(response, "\n") {
 		line = strings.TrimSpace(line)
