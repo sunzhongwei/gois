@@ -12,6 +12,7 @@ func main() {
 	domains := []string{
 		"example.com",
 		"sunzhongwei.com",
+		"yeda.xyz",
 	}
 	for _, domain := range domains {
 		whoisInfo, _ := gois.Whois(domain)

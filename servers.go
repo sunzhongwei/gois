@@ -171,6 +171,7 @@ var TLDWhoisServers = map[string]string{
 	"vg":     "whois.adamsnames.tc",
 	"ws":     "whois.website.ws",
 	"xxx":    "whois.nic.xxx",
+	"xyz":    "whois.nic.xyz",
 	"yu":     "whois.ripe.net",
 	"za.com": "whois.centralnic.com",
 }
