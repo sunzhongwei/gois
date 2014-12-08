@@ -13,12 +13,13 @@ import (
 )
 
 var CREATED_ON_KEYWORDS = []string{
-	"creation date",
+	"creation date", // .com, .xyz
 	"changed",
 	"domain create date",
 }
 var EXPIRED_ON_KEYWORDS = []string{
-	"expiration date", // .com
+	"expiration date",      // .com
+	"registry expiry date", // .xyz, e.g. yeda.xyz
 }
 
 // Record holds the information returned by the whois server
