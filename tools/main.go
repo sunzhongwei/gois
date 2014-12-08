@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/vially/gois"
+	//"github.com/vially/gois"
+	"../../gois"
 )
 
 func main() {

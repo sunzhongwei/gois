@@ -12,11 +12,15 @@ import (
 	"github.com/jinzhu/now"
 )
 
+var CREATED_ON_KEYWORDS = []string{"creation date", "changed", "domain create date"}
+var EXPIRED_ON_KEYWORDS = []string{"expiration date"}
+
 // Record holds the information returned by the whois server
 type Record struct {
 	Domain        string
 	TrimmedDomain string
 	CreatedOn     time.Time
+	ExpiredOn     time.Time
 	Registered    bool
 }
 
@@ -80,6 +84,9 @@ func QueryWhoisServer(domain, server string) (response string, err error) {
 	return
 }
 
+// parse whois record
+// e.g. created on, expired on
+// TODO: expired on
 func parse(response string) (record *Record, err error) {
 	for _, line := range strings.Split(response, "\n") {
 		line = strings.TrimSpace(line)
@@ -88,16 +95,33 @@ func parse(response string) (record *Record, err error) {
 		}
 		parts := strings.SplitN(line, ":", 2)
 		key, value := strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
-		if strings.ToLower(key) == "creation date" || strings.ToLower(key) == "changed" || strings.ToLower(key) == "domain create date" {
+		if contains(CREATED_ON_KEYWORDS, strings.ToLower(key)) {
 			if parsedDate, parseErr := now.Parse(value); parseErr != nil {
 				err = parseErr
 			} else {
 				record = &Record{CreatedOn: parsedDate, Registered: true}
 			}
+		}
+		if contains(EXPIRED_ON_KEYWORDS, strings.ToLower(key)) {
+			if parsedDate, parseErr := now.Parse(value); parseErr != nil {
+				err = parseErr
+			} else {
+				record.ExpiredOn = parsedDate
+			}
 			return
 		}
 	}
 	return nil, errors.New("Unable to parse whois record")
+}
+
+// check whether keyworks slice contains specific keyword
+func contains(keywords []string, keyword string) bool {
+	for _, value := range keywords {
+		if keyword == value {
+			return true
+		}
+	}
+	return false
 }
 
 func init() {
